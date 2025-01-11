@@ -52,7 +52,7 @@ def rank(students):
 
 
 PERIOD = "test-subjects"
-AMOUNT = 12
+Student.AMOUNT = 12
 
 with open(f"{PERIOD}.json", "r") as file:
     students_data = load(file)
@@ -63,12 +63,12 @@ for idx, name in enumerate(students):
 
 for student in students:
     student.load_prefs(students)
-    if len(student.prefs) < AMOUNT:
-        Student.max_occurance = max(
-            Student.max_occurance, (AMOUNT - len(student.prefs)) + 1
+    if len(student.prefs) < Student.AMOUNT:
+        Student.MAX_OCCURANCE = max(
+            Student.MAX_OCCURANCE, (Student.AMOUNT - len(student.prefs)) + 1
         )
 
-for day in range(AMOUNT):
+for day in range(Student.AMOUNT):
     rank(students)
     optimal_schedule(Mask(len(students)), day)
 

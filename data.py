@@ -33,14 +33,15 @@ class Mask(int):
 
 
 class Student:
-    max_occurance = 1
+    MAX_OCCURANCE = 1
+    AMOUNT = 12
 
     def __init__(self, name, settings):
         self.name = name
         self.requests = settings["requests"]
         self.exclude = settings["exclude"]
         self.prefs = {}
-        self.partners = [None] * 12
+        self.partners = [None] * Student.AMOUNT
 
     def load_prefs(self, students):
         for student in students:
@@ -65,8 +66,7 @@ class Student:
         if not counts:
             return True
         return (
-            max(counts.values()) < self.max_occurance
-            or other.name not in self.partners
+            max(counts.values()) < Student.MAX_OCCURANCE or other.name not in self.partners
         )
 
     def pair(self, other, day):
