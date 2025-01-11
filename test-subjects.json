@@ -1,0 +1,66 @@
+{
+  "John": {
+    "requests": ["Mary", "Joseph", "Jeffrey", "Esther", "Neymar"],
+    "exclude": []
+  },
+  "Messi": {
+    "requests": ["Alex", "George", "Lucas"],
+    "exclude": []
+  },
+  "Briana": {
+    "requests": ["Liam", "David", "Anthony", "Daniel", "Sabrina"],
+    "exclude": ["Messi", "Alex"]
+  },
+  "Lucas": {
+    "requests": ["George", "Alex", "Messi"],
+    "exclude": []
+  },
+  "Alex": {
+    "requests": ["Lucas", "George", "Messi"],
+    "exclude": ["Briana"]
+  },
+  "Esther": {
+    "requests": ["Sabrina", "Anthony", "Mary", "John"],
+    "exclude": ["Briana", "David"]
+  },
+  "Anthony": {
+    "requests": ["Briana", "Liam", "Sabrina"],
+    "exclude": []
+  },
+  "Liam": {
+    "requests": ["Briana", "David", "Esther"],
+    "exclude": []
+  },
+  "Mary": {
+    "requests": ["John", "Joseph", "Neymar", "Jeffrey"],
+    "exclude": []
+  },
+  "David": {
+    "requests": ["Liam", "Anthony", "Neymar", "Esther", "Sabrina"],
+    "exclude": []
+  },
+  "George": {
+    "requests": ["Lucas", "Alex", "Messi"],
+    "exclude": []
+  },
+  "Jeffrey": {
+    "requests": ["John", "Joseph", "Mary", "Esther", "Lucas"],
+    "exclude": ["David"]
+  },
+  "Sabrina": {
+    "requests": [],
+    "exclude": []
+  },
+  "Joseph": {
+    "requests": [],
+    "exclude": []
+  },
+  "Neymar": {
+    "requests": [],
+    "exclude": []
+  },
+  "Daniel": {
+    "requests": [],
+    "exclude": []
+  }
+}

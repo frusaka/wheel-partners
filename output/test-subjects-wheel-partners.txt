@@ -1,0 +1,224 @@
+Esther
+	1. John
+	2. Jeffrey
+	3. Daniel
+	4. Sabrina
+	5. Alex
+	6. Lucas
+	7. Liam
+	8. Messi
+	9. Mary
+	10. Anthony
+	11. George
+	12. Neymar
+
+Alex
+	1. Lucas
+	2. George
+	3. Liam
+	4. Messi
+	5. Esther
+	6. Mary
+	7. Daniel
+	8. Sabrina
+	9. Neymar
+	10. Joseph
+	11. David
+	12. Jeffrey
+
+Messi
+	1. George
+	2. Sabrina
+	3. Lucas
+	4. Alex
+	5. Mary
+	6. John
+	7. Anthony
+	8. Esther
+	9. Joseph
+	10. Neymar
+	11. Daniel
+	12. David
+
+Daniel
+	1. Anthony
+	2. Liam
+	3. Esther
+	4. Lucas
+	5. Joseph
+	6. Briana
+	7. Alex
+	8. Neymar
+	9. David
+	10. Jeffrey
+	11. Messi
+	12. John
+
+Sabrina
+	1. David
+	2. Messi
+	3. Mary
+	4. Esther
+	5. Jeffrey
+	6. Joseph
+	7. Briana
+	8. Alex
+	9. Anthony
+	10. John
+	11. Liam
+	12. George
+
+George
+	1. Messi
+	2. Alex
+	3. Joseph
+	4. Liam
+	5. David
+	6. Jeffrey
+	7. Mary
+	8. Briana
+	9. John
+	10. Lucas
+	11. Esther
+	12. Sabrina
+
+Lucas
+	1. Alex
+	2. Briana
+	3. Messi
+	4. Daniel
+	5. Anthony
+	6. Esther
+	7. David
+	8. Jeffrey
+	9. Liam
+	10. George
+	11. Neymar
+	12. Joseph
+
+David
+	1. Sabrina
+	2. John
+	3. Briana
+	4. Anthony
+	5. George
+	6. Liam
+	7. Lucas
+	8. Joseph
+	9. Daniel
+	10. Mary
+	11. Alex
+	12. Messi
+
+Joseph
+	1. Mary
+	2. Anthony
+	3. George
+	4. Jeffrey
+	5. Daniel
+	6. Sabrina
+	7. Neymar
+	8. David
+	9. Messi
+	10. Alex
+	11. Briana
+	12. Lucas
+
+Neymar
+	1. Briana
+	2. Mary
+	3. Jeffrey
+	4. John
+	5. Liam
+	6. Anthony
+	7. Joseph
+	8. Daniel
+	9. Alex
+	10. Messi
+	11. Lucas
+	12. Esther
+
+Liam
+	1. Jeffrey
+	2. Daniel
+	3. Alex
+	4. George
+	5. Neymar
+	6. David
+	7. Esther
+	8. John
+	9. Lucas
+	10. Briana
+	11. Sabrina
+	12. Mary
+
+John
+	1. Esther
+	2. David
+	3. Anthony
+	4. Neymar
+	5. Briana
+	6. Messi
+	7. Jeffrey
+	8. Liam
+	9. George
+	10. Sabrina
+	11. Mary
+	12. Daniel
+
+Briana
+	1. Neymar
+	2. Lucas
+	3. David
+	4. Mary
+	5. John
+	6. Daniel
+	7. Sabrina
+	8. George
+	9. Jeffrey
+	10. Liam
+	11. Joseph
+	12. Anthony
+
+Jeffrey
+	1. Liam
+	2. Esther
+	3. Neymar
+	4. Joseph
+	5. Sabrina
+	6. George
+	7. John
+	8. Lucas
+	9. Briana
+	10. Daniel
+	11. Anthony
+	12. Alex
+
+Mary
+	1. Joseph
+	2. Neymar
+	3. Sabrina
+	4. Briana
+	5. Messi
+	6. Alex
+	7. George
+	8. Anthony
+	9. Esther
+	10. David
+	11. John
+	12. Liam
+
+Anthony
+	1. Daniel
+	2. Joseph
+	3. John
+	4. David
+	5. Lucas
+	6. Neymar
+	7. Messi
+	8. Mary
+	9. Sabrina
+	10. Esther
+	11. Jeffrey
+	12. Briana
+
