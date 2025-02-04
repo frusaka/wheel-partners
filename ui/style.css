@@ -1,0 +1,54 @@
+.new-student {
+  display: grid;
+  grid-template-columns: 200px 150px 100px;
+  align-items: center;
+  column-gap: 10px;
+  row-gap: 10px;
+}
+.new-student {
+  margin-bottom: 10px;
+}
+.new-student * {
+  height: 100%;
+  box-sizing: border-box;
+}
+.new-student input {
+  padding: 6px;
+  font-size: 15px;
+}
+
+.new-student button {
+  background-color: darkgreen;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#js-student-list button {
+  padding: 10px 0px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+table {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+tr {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: baseline;
+}
+
+td h3 {
+  text-align: center;
+}
+
+.delete-student {
+  background-color: darkred;
+  width: 100%;
+  color: wheat;
+  border: none;
+}
