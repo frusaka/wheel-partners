@@ -17,7 +17,8 @@
   font-size: 15px;
 }
 
-.new-student button {
+.new-student button,
+#js-generate-button {
   background-color: darkgreen;
   color: white;
   border: none;
@@ -28,6 +29,12 @@
   padding: 10px 0px;
   font-size: 15px;
   cursor: pointer;
+}
+
+#js-generate-button {
+  font-size: 20px;
+  padding: 12px 20px;
+  border-radius: 8px;
 }
 
 table {
@@ -43,6 +50,6 @@ td h3 {
 .delete-student {
   background-color: darkred;
   width: 100%;
-  color: wheat;
+  color: white;
   border: none;
 }

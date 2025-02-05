@@ -1,14 +1,4 @@
-const fs = require("fs");
 const { Student, Mask } = require("./data.js");
-
-const PERIOD = "test-subjects";
-Student.AMOUNT = 12;
-const data = JSON.parse(fs.readFileSync(`./${PERIOD}.json`));
-
-const studentsData = new Map(Object.entries(data));
-let students = Array.from(studentsData.keys()).map(
-  (name, idx) => new Student(name, idx, studentsData.get(name))
-);
 
 function bitCount(n) {
   n = n - ((n >> 1) & 0x55555555);
@@ -16,7 +6,14 @@ function bitCount(n) {
   return (((n + (n >> 4)) & 0xf0f0f0f) * 0x1010101) >> 24;
 }
 
-function optimalSchedule(mask, day) {
+function rank(students) {
+  students.sort((student) =>
+    Array.from(student.prefs.values()).reduce((a, b) => a + b, 0)
+  );
+  for (let idx = 0; idx < students.length; idx++) students[idx].id = idx;
+}
+
+function optimalSchedule(students, mask, day) {
   if (!mask.val) return 1;
   let student = students[mask.minTrueIndex()];
   if (bitCount(mask.val) == 1) {
@@ -34,7 +31,9 @@ function optimalSchedule(mask, day) {
   }
 
   let pending = mask.switch([student.id], 0);
-  while (!optimalSchedule(mask.switch([student.id, other.id], 0), day)) {
+  while (
+    !optimalSchedule(students, mask.switch([student.id, other.id], 0), day)
+  ) {
     if (!pending.val) return 0;
     student = students[pending.minTrueIndex()];
     other = student.chooseRandom(mask);
@@ -45,36 +44,41 @@ function optimalSchedule(mask, day) {
   return 1;
 }
 
-function rank(students) {
-  students.sort((student) =>
-    Array.from(student.prefs.values()).reduce((a, b) => a + b, 0)
-  );
-  for (let idx = 0; idx < students.length; idx++) students[idx].id = idx;
-}
+function generate(students, amount = 12) {
+  Student.AMOUNT = amount;
 
-students.forEach((student) => {
-  student.loadPrefs(students);
-  if (student.prefs.length < Student.AMOUNT) {
-    Student.MAX_OCCURANCE = Math.max(
-      Student.MAX_OCCURANCE,
-      Student.AMOUNT - student.prefs.length + 1
-    );
+  // Loading preferences
+  students.forEach((student) => {
+    student.loadPrefs(students);
+    if (student.prefs.length < Student.AMOUNT) {
+      Student.MAX_OCCURANCE = Math.max(
+        Student.MAX_OCCURANCE,
+        Student.AMOUNT - student.prefs.length + 1
+      );
+    }
+  });
+
+  // Generating schedule
+  for (let day = 0; day < Student.AMOUNT; day++) {
+    rank(students);
+    optimalSchedule(students, new Mask(students.length), day);
   }
-});
 
-for (let day = 0; day < Student.AMOUNT; day++) {
-  rank(students);
-  optimalSchedule(new Mask(students.length), day);
+  return students;
 }
 
-let result = "";
+function stringify(students) {
+  let res = "";
+  for (const student of students) {
+    res += `${student.name}:\n\t`;
+    res += student.partners
+      .map((val, idx) => `${idx + 1}. ${val}`)
+      .join("\n\t");
+    res += "\n\n";
+  }
 
-for (const student of students) {
-  result += `${student.name}:\n\t`;
-  result += student.partners
-    .map((val, idx) => `${idx + 1}. ${val}`)
-    .join("\n\t");
-  result += "\n\n";
+  return res;
 }
 
-fs.writeFileSync(`output/${PERIOD}-wheel-partners.txt`, result);
+module.exports.generate = generate;
+module.exports.stringify = stringify;
