@@ -36,12 +36,6 @@ table {
   padding: 0;
 }
 
-tr {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: baseline;
-}
-
 td h3 {
   text-align: center;
 }
