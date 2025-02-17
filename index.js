@@ -1,4 +1,118 @@
-import { Student, Mask } from "./data.js";
+// Condensed to one file to make it work with html-preview
+function Counter(array) {
+  const counts = new Map();
+  for (const item of array) {
+    counts.set(item, (counts.get(item) || 0) + 1);
+  }
+  return counts;
+}
+
+class Mask {
+  constructor(size = null, val = null) {
+    if (size !== null) this.val = (1 << size) - 1;
+    else this.val = val;
+  }
+
+  at(index) {
+    return Boolean(this.val & (1 << index));
+  }
+
+  minTrueIndex() {
+    if (!this.val) {
+      return -1;
+    }
+    return Math.floor(Math.log2(this.val & -this.val));
+  }
+
+  switch(indices, value) {
+    let res = this.val;
+    for (const idx of indices) {
+      if (value) res |= 1 << idx;
+      else res &= ~(1 << idx);
+    }
+    return new Mask(null, res);
+  }
+}
+
+class Student {
+  MAX_OCCURANCE = 1;
+  AMOUNT = 12;
+
+  constructor(name, id, settings) {
+    this.name = name;
+    this.id = id;
+    this.requests = settings.requests;
+    this.exclude = settings.exclude;
+    this.prefs = new Map();
+    this.partners = Array(Student.AMOUNT).fill(null);
+  }
+
+  loadPrefs(students) {
+    for (const student of students) {
+      if (
+        student === this ||
+        this.exclude.includes(student.name) ||
+        student.exclude.includes(this.name)
+      )
+        continue;
+      if (
+        this.requests.includes(student.name) &&
+        student.requests.includes(this.name)
+      )
+        this.prefs.set(student, 3);
+      else if (this.requests.includes(student.name))
+        this.prefs.set(student, 1.75);
+      else if (student.requests.includes(this.name)) this.prefs.set(student, 1);
+      else this.prefs.set(student, 0.4);
+    }
+  }
+
+  isValidPartner(other) {
+    const counts = Counter(this.partners.filter(Boolean));
+    if (!counts.size) return true;
+    return Boolean(
+      Math.max(Math.max(...counts.values()), 0) < this.MAX_OCCURANCE ||
+        !this.partners.includes(other.name)
+    );
+  }
+
+  pair(other, day) {
+    if (!this.isValidPartner(other)) return;
+
+    this.partners[day] = other.name;
+    other.partners[day] = this.name;
+
+    if (!this.isValidPartner(other)) {
+      this.prefs.delete(other);
+      other.prefs.delete(this);
+      return;
+    }
+    this.prefs.set(other, this.prefs.get(other) * 0.1);
+    other.prefs.set(this, other.prefs.get(this) * 0.1);
+  }
+
+  chooseRandom(mask) {
+    const available = [];
+    const weights = [];
+    for (const student of Array.from(this.prefs.keys()).filter((item) =>
+      mask.at(item.id)
+    )) {
+      if (!this.isValidPartner(student)) continue;
+      available.push(student);
+      weights.push(this.prefs.get(student));
+    }
+    if (!available.length) return;
+    const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
+    let random = Math.random() * totalWeight;
+    for (const other of available) {
+      const weight = this.prefs.get(other);
+      if (random < weight) {
+        return other;
+      }
+      random -= weight;
+    }
+  }
+}
 
 function bitCount(n) {
   n = n - ((n >> 1) & 0x55555555);
@@ -79,4 +193,105 @@ function stringify(students) {
 
   return res;
 }
-export { generate, stringify };
+
+const studentsData =
+  JSON.parse(localStorage.getItem("wheels-partners-names")) || {};
+
+document
+  .getElementById("new-student-name")
+  .addEventListener("keyup", (event) =>
+    event.key == "Enter" ? addStudent() : null
+  );
+document
+  .getElementById("js-add-student-button")
+  .addEventListener("click", addStudent);
+document
+  .getElementById("js-generate-button")
+  .addEventListener("click", generateWheel);
+renderStudentList();
+
+function addStudent() {
+  const studentName = document.getElementById("new-student-name").value;
+  document.getElementById("new-student-name").value = "";
+  studentsData[studentName] = {
+    requests: [""],
+    exclude: [""],
+  };
+  localStorage.setItem("wheels-partners-names", JSON.stringify(studentsData));
+  renderStudentList();
+}
+
+function removeStudent(name) {
+  delete studentsData[name];
+  localStorage.setItem("wheels-partners-names", JSON.stringify(studentsData));
+  renderStudentList();
+}
+
+function generateWheel() {
+  const data = new Map(Object.entries(studentsData));
+  const students = Array.from(data.keys()).map(
+    (name, idx) => new Student(name, idx, data.get(name))
+  );
+  document.getElementById("js-output").innerText = stringify(
+    generate(students, document.getElementById("amount").value)
+  );
+}
+
+function renderStudentList() {
+  let todoHTML = "";
+  for (const [name, prefs] of Object.entries(studentsData)) {
+    todoHTML += `
+    <div>
+      <table>
+        <tr>
+          <td><h3>${name}</h3></td>
+          <td><button class="delete-student js-delete-student-button" data-student-name="${name}">Remove</button></td>
+        </tr>
+        <tr>
+          <th>Requests</th>
+          <th>Exclude</th>
+        </tr>
+        <tr>
+          <td contenteditable class=js-req-inp data-student-name="${name}">
+            ${prefs.requests.join("\n")}
+          </td>
+          <td contenteditable class=js-ex-inp data-student-name="${name}">
+            ${prefs.exclude.join("\n")}
+          </td>
+        </tr>
+      </table>
+    </div>`;
+  }
+
+  document.getElementById("js-student-list").innerHTML = todoHTML;
+  document
+    .querySelectorAll(".js-delete-student-button")
+    .forEach((jsButton) =>
+      jsButton.addEventListener("click", () =>
+        removeStudent(jsButton.dataset.studentName)
+      )
+    );
+
+  // Save settings
+  document.querySelectorAll(".js-req-inp").forEach((entry, idx) => {
+    entry.addEventListener("keyup", () => {
+      console.log(studentsData, entry.dataset.studentName);
+      studentsData[entry.dataset.studentName].requests =
+        entry.innerHTML.split("\n");
+      localStorage.setItem(
+        "wheels-partners-names",
+        JSON.stringify(studentsData)
+      );
+    });
+  });
+  document.querySelectorAll(".js-ex-inp").forEach((entry, idx) => {
+    entry.addEventListener("keyup", () => {
+      studentsData[entry.dataset.studentName].exclude =
+        entry.innerHTML.split("\n");
+      localStorage.setItem(
+        "wheels-partners-names",
+        JSON.stringify(studentsData)
+      );
+    });
+  });
+}
