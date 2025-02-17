@@ -113,5 +113,4 @@ class Student {
   }
 }
 
-module.exports.Student = Student;
-module.exports.Mask = Mask;
+export { Student, Mask };

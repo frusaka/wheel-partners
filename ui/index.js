@@ -1,3 +1,6 @@
+import { Student } from "../data.js";
+import { generate, stringify } from "../index.js";
+
 const studentsData =
   JSON.parse(localStorage.getItem("wheels-partners-names")) || {};
 
@@ -9,7 +12,9 @@ document
 document
   .getElementById("js-add-student-button")
   .addEventListener("click", addStudent);
-
+document
+  .getElementById("js-generate-button")
+  .addEventListener("click", generateWheel);
 renderStudentList();
 
 function addStudent() {
@@ -27,6 +32,16 @@ function removeStudent(name) {
   delete studentsData[name];
   localStorage.setItem("wheels-partners-names", JSON.stringify(studentsData));
   renderStudentList();
+}
+
+function generateWheel() {
+  const data = new Map(Object.entries(studentsData));
+  const students = Array.from(data.keys()).map(
+    (name, idx) => new Student(name, idx, data.get(name))
+  );
+  document.getElementById("js-output").innerText = stringify(
+    generate(students, document.getElementById("amount").value)
+  );
 }
 
 function renderStudentList() {

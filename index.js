@@ -1,4 +1,4 @@
-const { Student, Mask } = require("./data.js");
+import { Student, Mask } from "./data.js";
 
 function bitCount(n) {
   n = n - ((n >> 1) & 0x55555555);
@@ -79,6 +79,4 @@ function stringify(students) {
 
   return res;
 }
-
-module.exports.generate = generate;
-module.exports.stringify = stringify;
+export { generate, stringify };
