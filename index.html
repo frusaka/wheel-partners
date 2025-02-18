@@ -14,8 +14,11 @@
     </div>
     <div id="js-student-list"></div>
     <div id="settings">
-      <label for="amount">Amount:</label>
-      <input type="range" name="" id="amount" min="1" max="12" step="1">
+      <div class="range-container">
+        <label for="amount">Amount:</label>
+        <input type="range" id="amount" min="1" max="16" step="1" value="12">
+        <span id="amount-label">12</span>
+      </div>
       <button id="js-generate-button">Generate</button>
     </div>
     <div id="js-output">output:</div>

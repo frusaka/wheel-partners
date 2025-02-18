@@ -197,6 +197,12 @@ function stringify(students) {
 const studentsData =
   JSON.parse(localStorage.getItem("wheels-partners-names")) || {};
 
+const amountInput = document.getElementById("amount");
+const amountLabel = document.getElementById("amount-label");
+
+amountInput.addEventListener("input", () => {
+  amountLabel.textContent = amountInput.value;
+});
 document
   .getElementById("new-student-name")
   .addEventListener("keyup", (event) =>
@@ -208,6 +214,7 @@ document
 document
   .getElementById("js-generate-button")
   .addEventListener("click", generateWheel);
+
 renderStudentList();
 
 function addStudent() {
@@ -233,7 +240,7 @@ function generateWheel() {
     (name, idx) => new Student(name, idx, data.get(name))
   );
   document.getElementById("js-output").innerText = stringify(
-    generate(students, document.getElementById("amount").value)
+    generate(students, amountInput.value)
   );
 }
 
@@ -243,13 +250,15 @@ function renderStudentList() {
     todoHTML += `
     <div>
       <table>
-        <tr>
-          <td><h3>${name}</h3></td>
-          <td><button class="delete-student js-delete-student-button" data-student-name="${name}">Remove</button></td>
+        <tr class="student-header">
+          <td class="student-name">${name}</td>
+          <td>
+            <button class="delete-student js-delete-student-button" data-student-name="${name}">-</button>
+          </td>
         </tr>
         <tr>
-          <th>Requests</th>
-          <th>Exclude</th>
+          <th class=requests>Requests</th>
+          <th class=exclude>Exclude</th>
         </tr>
         <tr>
           <td contenteditable class=js-req-inp data-student-name="${name}">

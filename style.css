@@ -1,55 +1,112 @@
-.new-student {
-  display: grid;
-  grid-template-columns: 200px 150px 100px;
-  align-items: center;
-  column-gap: 10px;
-  row-gap: 10px;
-}
-.new-student {
-  margin-bottom: 10px;
-}
-.new-student * {
-  height: 100%;
-  box-sizing: border-box;
-}
-.new-student input {
-  padding: 6px;
-  font-size: 15px;
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  text-align: center;
+  margin: 0;
+  padding: 20px;
 }
 
-.new-student button,
-#js-generate-button {
-  background-color: darkgreen;
+h1 {
+  color: #333;
+}
+
+.new-student,
+#settings {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 10px auto;
+  width: 90%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input,
+button {
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+button {
+  background-color: #007bff;
   color: white;
   border: none;
   cursor: pointer;
+  transition: background 0.3s;
 }
 
-#js-student-list button {
-  padding: 10px 0px;
-  font-size: 15px;
-  cursor: pointer;
+button:hover {
+  background-color: #0056b3;
 }
 
-#js-generate-button {
-  font-size: 20px;
-  padding: 12px 20px;
+#js-student-list,
+#js-output {
+  background: white;
+  padding: 15px;
   border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  width: 90%;
+  max-width: 600px;
+  text-align: left;
+}
+
+#js-output {
+  font-weight: bold;
+  color: #333;
 }
 
 table {
   width: 100%;
-  margin: 0;
-  padding: 0;
+  border-collapse: collapse;
+  margin-top: 10px;
 }
 
-td h3 {
+td,
+th {
+  padding: 8px;
+  border: 1px solid #ddd;
   text-align: center;
 }
 
+.requests {
+  background-color: #b3e6c1;
+  color: #0a502e;
+}
+
+.exclude {
+  background-color: #f5b5b5;
+  color: #601616;
+}
+
+td[contenteditable] {
+  background-color: #f9f9f9;
+  cursor: text;
+}
+
+
+.student-name {
+  text-align: left;
+  font-size: 18px;
+  font-weight: bold;
+}
+
 .delete-student {
-  background-color: darkred;
-  width: 100%;
+  background-color: #dc3545;
   color: white;
   border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.delete-student:hover {
+  background-color: #c82333;
 }
