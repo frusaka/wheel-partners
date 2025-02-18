@@ -253,10 +253,10 @@ function renderStudentList() {
         </tr>
         <tr>
           <td contenteditable class=js-req-inp data-student-name="${name}">
-            ${prefs.requests.join("\n")}
+            ${prefs.requests.join("<br>")}
           </td>
           <td contenteditable class=js-ex-inp data-student-name="${name}">
-            ${prefs.exclude.join("\n")}
+            ${prefs.exclude.join("<br>")}
           </td>
         </tr>
       </table>
@@ -277,7 +277,7 @@ function renderStudentList() {
     entry.addEventListener("keyup", () => {
       console.log(studentsData, entry.dataset.studentName);
       studentsData[entry.dataset.studentName].requests =
-        entry.innerHTML.split("\n");
+        entry.innerHTML.split("<br>");
       localStorage.setItem(
         "wheels-partners-names",
         JSON.stringify(studentsData)
@@ -287,7 +287,7 @@ function renderStudentList() {
   document.querySelectorAll(".js-ex-inp").forEach((entry, idx) => {
     entry.addEventListener("keyup", () => {
       studentsData[entry.dataset.studentName].exclude =
-        entry.innerHTML.split("\n");
+        entry.innerHTML.split("<br>");
       localStorage.setItem(
         "wheels-partners-names",
         JSON.stringify(studentsData)
