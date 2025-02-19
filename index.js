@@ -242,6 +242,7 @@ function generateWheel() {
   document.getElementById("js-output").innerText = stringify(
     generate(students, amountInput.value)
   );
+  console.log(studentsData);
 }
 
 function renderStudentList() {
@@ -284,9 +285,8 @@ function renderStudentList() {
   // Save settings
   document.querySelectorAll(".js-req-inp").forEach((entry, idx) => {
     entry.addEventListener("keyup", () => {
-      console.log(studentsData, entry.dataset.studentName);
       studentsData[entry.dataset.studentName].requests =
-        entry.innerHTML.split("<br>");
+        entry.innerText.split("\n");
       localStorage.setItem(
         "wheels-partners-names",
         JSON.stringify(studentsData)
@@ -296,7 +296,7 @@ function renderStudentList() {
   document.querySelectorAll(".js-ex-inp").forEach((entry, idx) => {
     entry.addEventListener("keyup", () => {
       studentsData[entry.dataset.studentName].exclude =
-        entry.innerHTML.split("<br>");
+        entry.innerText.split("\n");
       localStorage.setItem(
         "wheels-partners-names",
         JSON.stringify(studentsData)
