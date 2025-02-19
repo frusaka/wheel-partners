@@ -1,4 +1,30 @@
 // Condensed to one file to make it work with html-preview
+
+let maxOccurance = 1;
+
+const studentsData =
+  JSON.parse(localStorage.getItem("wheels-partners-names")) || {};
+
+const amountInput = document.getElementById("amount");
+const amountLabel = document.getElementById("amount-label");
+
+amountInput.addEventListener("input", () => {
+  amountLabel.textContent = amountInput.value;
+});
+document
+  .getElementById("new-student-name")
+  .addEventListener("keyup", (event) =>
+    event.key == "Enter" ? addStudent() : null
+  );
+document
+  .getElementById("js-add-student-button")
+  .addEventListener("click", addStudent);
+document
+  .getElementById("js-generate-button")
+  .addEventListener("click", generate);
+
+renderStudentList();
+
 function Counter(array) {
   const counts = new Map();
   for (const item of array) {
@@ -35,16 +61,13 @@ class Mask {
 }
 
 class Student {
-  MAX_OCCURANCE = 1;
-  AMOUNT = 12;
-
   constructor(name, id, settings) {
     this.name = name;
     this.id = id;
     this.requests = settings.requests;
     this.exclude = settings.exclude;
     this.prefs = new Map();
-    this.partners = Array(Student.AMOUNT).fill(null);
+    this.partners = Array(amountInput.value).fill(null);
   }
 
   loadPrefs(students) {
@@ -71,7 +94,7 @@ class Student {
     const counts = Counter(this.partners.filter(Boolean));
     if (!counts.size) return true;
     return Boolean(
-      Math.max(Math.max(...counts.values()), 0) < this.MAX_OCCURANCE ||
+      Math.max(Math.max(...counts.values()), 0) < maxOccurance ||
         !this.partners.includes(other.name)
     );
   }
@@ -136,7 +159,6 @@ function optimalSchedule(students, mask, day) {
     return 1;
   }
   let other = student.chooseRandom(mask);
-  // console.log(other);
   if (!other) return 0;
 
   if (other.name == student.partners[day - 1]) {
@@ -158,27 +180,27 @@ function optimalSchedule(students, mask, day) {
   return 1;
 }
 
-function generate(students, amount = 12) {
-  Student.AMOUNT = amount;
-
+function generate() {
+  const data = new Map(Object.entries(studentsData));
+  const students = Array.from(data.keys()).map(
+    (name, idx) => new Student(name, idx, data.get(name))
+  );
   // Loading preferences
   students.forEach((student) => {
     student.loadPrefs(students);
-    if (student.prefs.length < Student.AMOUNT) {
-      Student.MAX_OCCURANCE = Math.max(
-        Student.MAX_OCCURANCE,
-        Student.AMOUNT - student.prefs.length + 1
+    if (student.prefs.size < amountInput.value) {
+      maxOccurance = Math.max(
+        maxOccurance,
+        amountInput.value - student.prefs.size + 1
       );
     }
   });
-
   // Generating schedule
-  for (let day = 0; day < Student.AMOUNT; day++) {
+  for (let day = 0; day < amountInput.value; day++) {
     rank(students);
     optimalSchedule(students, new Mask(students.length), day);
   }
-
-  return students;
+  document.getElementById("js-output").innerText = stringify(students);
 }
 
 function stringify(students) {
@@ -193,29 +215,6 @@ function stringify(students) {
 
   return res;
 }
-
-const studentsData =
-  JSON.parse(localStorage.getItem("wheels-partners-names")) || {};
-
-const amountInput = document.getElementById("amount");
-const amountLabel = document.getElementById("amount-label");
-
-amountInput.addEventListener("input", () => {
-  amountLabel.textContent = amountInput.value;
-});
-document
-  .getElementById("new-student-name")
-  .addEventListener("keyup", (event) =>
-    event.key == "Enter" ? addStudent() : null
-  );
-document
-  .getElementById("js-add-student-button")
-  .addEventListener("click", addStudent);
-document
-  .getElementById("js-generate-button")
-  .addEventListener("click", generateWheel);
-
-renderStudentList();
 
 function addStudent() {
   const studentName = document.getElementById("new-student-name").value;
@@ -232,17 +231,6 @@ function removeStudent(name) {
   delete studentsData[name];
   localStorage.setItem("wheels-partners-names", JSON.stringify(studentsData));
   renderStudentList();
-}
-
-function generateWheel() {
-  const data = new Map(Object.entries(studentsData));
-  const students = Array.from(data.keys()).map(
-    (name, idx) => new Student(name, idx, data.get(name))
-  );
-  document.getElementById("js-output").innerText = stringify(
-    generate(students, amountInput.value)
-  );
-  console.log(studentsData);
 }
 
 function renderStudentList() {
