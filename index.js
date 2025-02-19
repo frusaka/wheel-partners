@@ -246,8 +246,8 @@ function renderStudentList() {
           </td>
         </tr>
         <tr>
-          <th class=requests>Requests</th>
-          <th class=exclude>Exclude</th>
+          <th class=requests>Likes</th>
+          <th class=exclude>Dislikes</th>
         </tr>
         <tr>
           <td contenteditable class=js-req-inp data-student-name="${name}">
