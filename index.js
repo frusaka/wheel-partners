@@ -242,7 +242,7 @@ function renderStudentList() {
         <tr class="student-header">
           <td class="student-name">${name}</td>
           <td>
-            <button class="delete-student js-delete-student-button" data-student-name="${name}">-</button>
+            <button class="delete-student js-delete-student-button" data-student-name="${name}">x</button>
           </td>
         </tr>
         <tr>

@@ -73,6 +73,9 @@ td,
 th {
   padding: 8px;
   border: 1px solid #ddd;
+}
+
+th, .student-header td {
   text-align: center;
 }
 
@@ -91,11 +94,14 @@ td[contenteditable] {
   cursor: text;
 }
 
-
 .student-name {
   text-align: left;
   font-size: 18px;
   font-weight: bold;
+}
+
+.student-header td:nth-child(2) {
+  text-align: right;
 }
 
 .delete-student {
